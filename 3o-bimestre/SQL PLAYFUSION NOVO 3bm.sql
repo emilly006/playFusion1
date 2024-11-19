@@ -2,68 +2,68 @@ create database playFusion;
 use playFusion;
 
 
-CREATE TABLE usuario(
+CREATE TABLE usuarioRegistro(
 id INT AUTO_INCREMENT PRIMARY KEY,
-username VARCHAR(100)unique,
-email VARCHAR(100),
-senha VARCHAR(50) unique,
-telefone VARCHAR(20) unique,
-dat_de_nasc DATE
+username VARCHAR(100) not null unique,
+email VARCHAR(100) not null,
+senha VARCHAR(50) not null unique,
+telefone VARCHAR(20) not null unique,
+dat_de_nasc DATE not null
 );
 
 
 create table equipe(
-idDaEquipe int,
-nome varchar(100),
-primary key(idDaEquipe)
+idDaEquipe int auto_increment primary key,
+nome varchar(100) not null 
 );
 
 create table jogo(
-nome varchar(30),
-codigo int primary key,
-categoria varchar(10),
+nome varchar(30) not null,
+codigo int auto_increment primary key,
+categoria varchar(30) not null,
 jogosDisponiveis varchar(30),
 foto varchar(100),
-descrição varchar(100)
+descricao varchar(100)
 );
 
 create table live_streams(
 id int auto_increment primary key,
 foto varchar(100),
-fk_usuario_id int,
+fk_usuarioRegistro_id int,
 fk_jogo_codigo int,
 nome varchar(100),
 descrição varchar(100),
-foreign key (fk_usuario_id) references usuario(id),
+foreign key (fk_usuarioRegistro_id) references usuarioRegistro(id),
 foreign key (fk_jogo_codigo) references jogo(codigo)
 );
 
 create table chat(
-fk_usuario_id int,
+fk_usuarioRegistro_id int,
 id int auto_increment primary key,
 ultima_mensagem varchar(100),
 foto varchar (100),
 quantidadeDeMensagens int,
 horario timestamp,
-foreign key (fk_usuario_id) references usuario(id)
+foreign key (fk_usuarioRegistro_id) references usuarioRegistro(id)
 );
 
 create table premio(
-codigo varchar(20)primary key,
-descricao varchar (32),
+codigo int auto_increment primary key,
+descricao varchar (32) not null,
 tipo varchar(21)
 );
 
 create table competicao(
+taxaDeinscricao int,
 premiacao varchar (20),
-codigo varchar (20) primary key,
-dataI int,
-dataF int,
+codigo int auto_increment primary key,
+dataI date not null,
+dataF date not null,
 local varchar (50),
 descricao varchar(100),
 classificacao_indicativa varchar(50),
-fk_premio_codigo varchar(20),
-fk_jogo_codigo int auto_increment,
+fk_premio_codigo int,
+fk_jogo_codigo int,
 foreign key (fk_jogo_codigo) references jogo(codigo),
 foreign key (fk_premio_codigo) references premio(codigo)
 );
@@ -96,11 +96,11 @@ cidade varchar (100)
 );
 
 create table inscricao(
-fk_jogo_codigo int,
-fk_competicao_codigo varchar (20),
-quantidadeDeJogadores int,
-categoria int,
-fk_equipe_idDaEquipe int,
+fk_jogo_codigo int not null,
+fk_competicao_codigo int not null,
+quantidadeDeJogadores int not null,
+categoria int not null,
+fk_equipe_idDaEquipe int not null,
 id int auto_increment primary key,
 foreign key(fk_jogo_codigo) references jogo(codigo),
 foreign key(fk_competicao_codigo) references competicao(codigo),
@@ -110,32 +110,33 @@ foreign key(fk_equipe_idDaEquipe) references equipe(idDaEquipe)
 create table pagamento(
 cartao varchar(50),
 pix varchar(50) ,
-fk_inscricao_id int,
+fk_inscricao_id int not null,
 id int auto_increment primary key,
 foreign key (fk_inscricao_id) references inscricao(id)
 );
 
 create table perfil(
 Fk_jogador_id int,
-fk_usuario_id int,
+fk_usuarioRegistro_id int,
 foto varchar(100),
 id int auto_increment primary key,
 foreign key (Fk_jogador_id) references jogador(id),
-foreign key (fk_usuario_id) references usuario(id)
+foreign key (fk_usuarioregistro_id) references usuarioRegistro(id)
 );
 
 create table confi_notificacao(
-ativarNotificacao boolean,
-receberNotificacaoDasCompeticao boolean,
-receberNotificacaoDasEquipesVencedoras boolean,
-ReceberNotificacaoDePremios boolean
+id int auto_increment primary key,
+ativarNotificacao tinyint(1) not null default(0),
+receberNotificacaoDasCompeticao tinyint(1)not null default(0),
+receberNotificacaoDasEquipesVencedoras tinyint(1) not null default(0),
+ReceberNotificacaoDePremios tinyint(1) not null default(0)
 );
 
 CREATE TABLE PremioJogoEquipeCompeticao(
-FK_premio_codigo varchar(20),
+FK_premio_codigo int,
 FK_jogo_codigo int,
 FK_equipe_idDaEquipe int,
-FK_competicao_codigo VARCHAR(20),
+FK_competicao_codigo int,
 FOREIGN KEY(FK_premio_codigo) REFERENCES premio (codigo),
 FOREIGN KEY(FK_jogo_codigo) REFERENCES jogo (codigo),
 FOREIGN KEY(FK_equipe_idDaEquipe) REFERENCES equipe(idDaEquipe),
@@ -144,10 +145,9 @@ PRIMARY KEY(FK_premio_codigo, FK_jogo_codigo, FK_equipe_idDaEquipe, FK_competica
 );
 
 create table competicaoEquipeJogo(
-TAXADEINSCRICAO INT,
-FK_jogo_codigo int,
-FK_equipe_idDaEquipe int,
-FK_competicao_codigo varchar(20),
+FK_jogo_codigo int not null,
+FK_equipe_idDaEquipe int not null,
+FK_competicao_codigo int not null,
 FOREIGN KEY(FK_jogo_codigo) REFERENCES jogo(codigo),
 FOREIGN KEY(FK_equipe_idDaEquipe) REFERENCES equipe(idDaEquipe),
 FOREIGN KEY(FK_competicao_codigo) REFERENCES competicao(codigo),
@@ -155,24 +155,26 @@ PRIMARY KEY(FK_jogo_codigo,FK_equipe_idDaEquipe,FK_competicao_codigo)
 );
 
 #tabela cadastro
-INSERT INTO Usuario  (id, username, email ,senha, telefone, dat_de_nasc) VALUES(888,'betohxz9', 'betohxz123@gmail.com', '526488bet', '(82) 99821.2691', '2006-04-26');
-INSERT INTO usuario(id, username, email ,senha, telefone, dat_de_nasc) VALUES(555,'thomas', 'thomas2024@gmail.com', 'thomas123', '(82) 90000.0000', '2009-04-22');
-INSERT INTO usuario (id, username, email , senha, telefone, dat_de_nasc) VALUES(6666,'emy', 'emiig20@gmail.com', 'emig00', '(82) 99410.01130', '2008-06-01');
+insert into usuarioRegistro (username , email , senha , telefone , dat_de_nasc) values ('betohxz9', 'betohxz123@gmail.com', '526488bet', '(82) 99821.2691', '2006-04-26');
+insert into usuarioRegistro (username , email , senha , telefone , dat_de_nasc) values ('thomas', 'thomas2024@gmail.com', 'thomas123', '(82) 90000.0000', '2009-04-22');
+insert into usuarioRegistro (username , email , senha , telefone , dat_de_nasc) values ('emy', 'emiig20@gmail.com', 'emig00', '(82) 99410.01130', '2008-06-01');
 
 #tabela equipe
-INSERT INTO equipe(idDaEquipe, nome) VALUES('5555', 'equipe1');
-INSERT INTO equipe(idDaEquipe, nome) VALUES('5556', 'equipe2');
-INSERT INTO equipe(idDaEquipe, nome) VALUES('5522', 'equipe3');
+INSERT INTO equipe( nome) VALUES('equipe1');
+INSERT INTO equipe(nome) VALUES('equipe2');
+INSERT INTO equipe(nome) VALUES('equipe3');
 
 #tabela jogo
-INSERT INTO jogo(nome, codigo, categoria, jogosDisponiveis) VALUES('FREE FIRE', 2222, '1', 'FF');
-INSERT INTO jogo(nome, codigo, categoria, jogosDisponiveis) VALUES('LEAGUE OF LEGENDS', 2262, '2', ' VV');
-INSERT INTO jogo(nome, codigo, categoria, jogosDisponiveis) VALUES('VALORANT', 2252, '3', ' LOL');
+
+INSERT INTO jogo(nome, categoria, jogosDisponiveis, foto, descricao) VALUES('FREE FIRE', '1', 'FF', '', 'Já disponivel');
+INSERT INTO jogo(nome, categoria, jogosDisponiveis, foto, descricao) VALUES('LEAGUE OF LEGENDS', '2', ' VV', 'ja disponivel');
+INSERT INTO jogo(nome, categoria, jogosDisponiveis, foto, descricao) VALUES('VALORANT', '3', ' LOL', 'ja disponivel');
 
 #tabela live_streams
-INSERT INTO live_streams (fk_usuario_id, fk_jogo_codigo, nome, descrição)VALUES (888, 2222, 'Ao vivo free fire', '250mil participantes');
-INSERT INTO live_streams (fk_usuario_id, fk_jogo_codigo, nome, descrição)VALUES (555, 2262, 'Ao vivo LOL', '200mil participantes');
-INSERT INTO live_streams (fk_usuario_id, fk_jogo_codigo, nome, descrição)VALUES (6666, 2252, 'Ao vivo valorante', '100mil participantes');
+
+INSERT INTO live_streams (foto, nome, descrição)VALUES ('', 'Ao vivo free fire', '250mil participantes');
+INSERT INTO live_streams (foto, nome, descrição)VALUES ('','Ao vivo LOL', '200mil participantes');
+INSERT INTO live_streams (foto, nome, descrição)VALUES ('', 'Ao vivo valorante', '100mil participantes');
 
 
 #tabela prêmio
