@@ -55,7 +55,7 @@ tipo varchar(21)
 
 create table competicao(
 taxaDeinscricao int,
-premiacao varchar (20),
+premiacao varchar (30),
 codigo int auto_increment primary key,
 dataI date not null,
 dataF date not null,
@@ -68,13 +68,24 @@ foreign key (fk_jogo_codigo) references jogo(codigo),
 foreign key (fk_premio_codigo) references premio(codigo)
 );
 
+create table inscricao(
+fk_jogo_codigo int not null,
+fk_competicao_codigo int not null,
+quantidadeDeJogadores int not null,
+categoria int not null,
+fk_equipe_idDaEquipe int not null,
+id int auto_increment primary key,
+foreign key(fk_jogo_codigo) references jogo(codigo),
+foreign key(fk_competicao_codigo) references competicao(codigo),
+foreign key(fk_equipe_idDaEquipe) references equipe(idDaEquipe)
+);
 
 create table criarCompteticao(
 fk_jogo_codigo int,
 nomeDaCompeticao varchar(100),
-categoriaDosJogadores varchar(100),
+categoriaDosJogadores int,
 codigoDaCompeticao int auto_increment primary key,
-valorDoPremio varchar(100),
+valorDoPremio int,
 localDaCompeticao varchar(100),
 data date,
 foreign key(fk_jogo_codigo) references jogo(codigo)
@@ -89,22 +100,10 @@ foreign key(fk_jogo_codigo) references jogo(codigo)
 
 create table jogador(
 nome varchar (32),
-categoria varchar (25),
+categoria int,
 nivel int,
 Id int primary key,
 cidade varchar (100)
-);
-
-create table inscricao(
-fk_jogo_codigo int not null,
-fk_competicao_codigo int not null,
-quantidadeDeJogadores int not null,
-categoria int not null,
-fk_equipe_idDaEquipe int not null,
-id int auto_increment primary key,
-foreign key(fk_jogo_codigo) references jogo(codigo),
-foreign key(fk_competicao_codigo) references competicao(codigo),
-foreign key(fk_equipe_idDaEquipe) references equipe(idDaEquipe)
 );
 
 create table pagamento(
@@ -126,11 +125,20 @@ foreign key (fk_usuarioregistro_id) references usuarioRegistro(id)
 
 create table confi_notificacao(
 id int auto_increment primary key,
-ativarNotificacao tinyint(1) not null default(0),
-receberNotificacaoDasCompeticao tinyint(1)not null default(0),
-receberNotificacaoDasEquipesVencedoras tinyint(1) not null default(0),
-ReceberNotificacaoDePremios tinyint(1) not null default(0)
+ativarNotificacao bool not null default false,
+receberNotificacaoDasCompeticao bool not null default false,
+receberNotificacaoDasEquipesVencedoras bool not null default false,
+ReceberNotificacaoDePremios bool not null default false
 );
+
+CREATE TABLE Suporte (
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+	FK_usuarioRegistro_id int,         
+    duvida TEXT,  
+    status_atendimento VARCHAR(50),
+    foreign key(fk_usuarioRegistro_id) references usuarioRegistro (id)
+);
+
 
 CREATE TABLE PremioJogoEquipeCompeticao(
 FK_premio_codigo int,
@@ -155,49 +163,97 @@ PRIMARY KEY(FK_jogo_codigo,FK_equipe_idDaEquipe,FK_competicao_codigo)
 );
 
 #tabela cadastro
-insert into usuarioRegistro (username , email , senha , telefone , dat_de_nasc) values ('betohxz9', 'betohxz123@gmail.com', '526488bet', '(82) 99821.2691', '2006-04-26');
-insert into usuarioRegistro (username , email , senha , telefone , dat_de_nasc) values ('thomas', 'thomas2024@gmail.com', 'thomas123', '(82) 90000.0000', '2009-04-22');
-insert into usuarioRegistro (username , email , senha , telefone , dat_de_nasc) values ('emy', 'emiig20@gmail.com', 'emig00', '(82) 99410.01130', '2008-06-01');
+insert into usuarioRegistro (id, username , email , senha , telefone , dat_de_nasc) values (222, 'betohxz9', 'betohxz123@gmail.com', '526488bet', '(82) 99821.2691', '2006-04-26');
+insert into usuarioRegistro (id, username , email , senha , telefone , dat_de_nasc) values (333, 'thomas', 'thomas2024@gmail.com', 'thomas123', '(82) 90000.0000', '2009-04-22');
+insert into usuarioRegistro (id, username , email , senha , telefone , dat_de_nasc) values (444, 'emy', 'emiig20@gmail.com', 'emig00', '(82) 99410.01130', '2008-06-01');
 
 #tabela equipe
-INSERT INTO equipe( nome) VALUES('equipe1');
-INSERT INTO equipe(nome) VALUES('equipe2');
-INSERT INTO equipe(nome) VALUES('equipe3');
+INSERT INTO equipe(idDaEquipe, nome) VALUES(555, 'equipe1');
+INSERT INTO equipe(idDaEquipe, nome) VALUES(999, 'equipe2');
+INSERT INTO equipe(idDaEquipe, nome) VALUES(222, 'equipe3');
 
 #tabela jogo
-
-INSERT INTO jogo(nome, categoria, jogosDisponiveis, foto, descricao) VALUES('FREE FIRE', '1', 'FF', '', 'Já disponivel');
-INSERT INTO jogo(nome, categoria, jogosDisponiveis, foto, descricao) VALUES('LEAGUE OF LEGENDS', '2', ' VV', 'ja disponivel');
-INSERT INTO jogo(nome, categoria, jogosDisponiveis, foto, descricao) VALUES('VALORANT', '3', ' LOL', 'ja disponivel');
+INSERT INTO jogo(nome, codigo, categoria, jogosDisponiveis, foto, descricao) VALUES('FREE FIRE', 254, '1', 'FF', '', 'Já disponivel');
+INSERT INTO jogo(nome, codigo, categoria, jogosDisponiveis, foto, descricao) VALUES('LEAGUE OF LEGENDS', 002, '2', '',' VV', 'ja disponivel');
+INSERT INTO jogo(nome, codigo, categoria, jogosDisponiveis, foto, descricao) VALUES('VALORANT', 236, '3', ' LOL', '', 'ja disponivel');
 
 #tabela live_streams
+INSERT INTO live_streams (id, fk_usuarioRegistro_id, fk_jogo_codigo, foto, nome, descrição)VALUES (589, 222, 254, '', 'Ao vivo free fire', '250mil participantes');
+INSERT INTO live_streams (id, fk_usuarioRegistro_id, fk_jogo_codigo, foto, nome, descrição)VALUES (698, 333, 002, '','Ao vivo LOL', '200mil participantes');
+INSERT INTO live_streams (id, fk_usuarioRegistro_id, fk_jogo_codigo, foto, nome, descrição)VALUES (445, 444, 236, '', 'Ao vivo valorante', '100mil participantes');
 
-INSERT INTO live_streams (foto, nome, descrição)VALUES ('', 'Ao vivo free fire', '250mil participantes');
-INSERT INTO live_streams (foto, nome, descrição)VALUES ('','Ao vivo LOL', '200mil participantes');
-INSERT INTO live_streams (foto, nome, descrição)VALUES ('', 'Ao vivo valorante', '100mil participantes');
-
+#chat
+insert into chat(fk_usuarioRegistro_id, ultima_mensagem, quantidadedemensagens, foto, horario)values (222,'Não sei, será que a pain ganha hoje?', 1 ,'', '2024-11-21 07:10:40') ;
+insert into chat(fk_usuarioRegistro_id, ultima_mensagem, quantidadeDeMensagens, foto, horario)values (333, 'vai ser tranquilo', 1, '', '2024-11-21 10:50:55') ;
+insert into chat(fk_usuarioRegistro_id, ultima_mensagem, quantidadedemensagens, foto, horario)values (444, 'VRK ganha suave',  4,'', '2024-11-21 9:30:32') ;
 
 #tabela prêmio
-INSERT INTO premio(codigo, descricao, tipo) VALUES('444B', 'PIX', '1');
-INSERT INTO premio(codigo, descricao, tipo) VALUES('494B', 'MOEDA EM JOGO', '2');
-INSERT INTO premio(codigo, descricao, tipo) VALUES('444AB', 'Credito', '1');
+INSERT INTO premio(codigo, descricao, tipo) VALUES(254, 'PIX', '1');
+INSERT INTO premio(codigo, descricao, tipo) VALUES(694, 'MOEDA EM JOGO', '2');
+INSERT INTO premio(codigo, descricao, tipo) VALUES(024, 'Credito no app', '3');
 
 #tabela competicao
-INSERT INTO competicao(premiacao, codigo, dataI, dataF, local) VALUES('2', '505', 2023, 2024, 'ENDEREÇO TAL3');
-INSERT INTO competicao(premiacao, codigo, dataI, dataF, local) VALUES('6', '565', 2023, 2024, 'ENDEREÇO TAL1');
-INSERT INTO competicao(premiacao, codigo, dataI, dataF, local) VALUES('2', '557', 2025, 2026, 'ENDEREÇO TAL2');
+INSERT INTO competicao(taxaDeinscricao, premiacao, codigo, dataI, dataF, local, descricao, fk_premio_codigo, fk_jogo_codigo, classificacao_indicativa) 
+VALUES('30','credito no jogo', 650, '2023-12-01', '2023-12-02', 'ENDEREÇO TAL3','Jogo fps', 254, 254, '16');
+INSERT INTO competicao(taxaDeinscricao, premiacao, codigo, dataI, dataF, local,descricao, fk_premio_codigo, fk_jogo_codigo, classificacao_indicativa) 
+VALUES('30','pix', 697, '2023-11-26', '2023-11-27', 'ENDEREÇO TAL4', 'Jogo moba', 694, 002,'12');
+INSERT INTO competicao(taxaDeinscricao, premiacao, codigo, dataI, dataF, local,descricao, fk_premio_codigo, fk_jogo_codigo, classificacao_indicativa)
+VALUES('40' ,'credito na plata', 698, '2023-11-21', '2023-11-22', 'ENDEREÇO TAL5', 'jogo moba', 024, 236, '14');
 
+#inscricao
+insert into inscricao (fk_jogo_codigo, fk_competicao_codigo, quantidadeDeJogadores, categoria, fk_equipe_idDaEquipe, id) 
+values(254,650, 50, 3, 555,698);
+insert into inscricao (fk_jogo_codigo, fk_competicao_codigo, quantidadeDeJogadores, categoria, fk_equipe_idDaEquipe, id) 
+values(002,697, 100, 2, 999, 6965);
+insert into inscricao (fk_jogo_codigo, fk_competicao_codigo, quantidadeDeJogadores, categoria, fk_equipe_idDaEquipe, id) 
+values(236,698,20, 10, 222,4587);
+
+#criar_competiçãoptimi
+insert into criarCompeticao(fk_jogo_codigo, nomeDaCompeticao, categoriaDosJogadores, codigoDaCompeticao, valorDoPremio, localDaCompeticao, data)
+values(254, 'competição 1', 3, 567, 300, 'competição 100% online', 2024-11-20);
+insert into criarCompeticao(fk_jogo_codigo, nomeDaCompeticao, categoriaDosJogadores, codigoDaCompeticao, valorDoPremio, localDaCompeticao, data)
+values(002, 'competição 2', 5, 5617, 350, 'competição 100% online', 2024-11-22);
+insert into criarCompeticao(fk_jogo_codigo, nomeDaCompeticao, categoriaDosJogadores, codigoDaCompeticao, valorDoPremio, localDaCompeticao, data)
+values(236, 'competição 3', 6, 5657, 100, 'casa de eventos rua 3', 2024-11-25);
+
+#escolherCompeticao
+insert into escolherCompeticao(fk_jogo_codigo, foto, descricao) values(254, '', 'competição 5x5');
+insert into escolherCompeticao(fk_jogo_codigo, foto, descricao) values(002, '', 'competição 1x1');
+insert into escolherCompeticao(fk_jogo_codigo, foto, descricao) values(236, '', 'competição 4x4');
+
+#pagamento
+insert into pagamento(cartao, pix, fk_inscricao_id, id) values('Número do cartão, Data de nascimento, cod de segurança, Nome do titular do cartão','pague com pix', 100);
+insert into pagamento(cartao, pix, fk_inscricao_id, id) values('Número do cartão, Data de nascimento, cod de segurança, Nome do titular do cartão','pague com pix', 200);
+insert into pagamento(cartao, pix, fk_inscricao_id, id) values('Número do cartão, Data de nascimento, cod de segurança, Nome do titular do cartão','pague com pix', 360);
+
+#perfil
+insert into perfil(fk_jogador_id, fk_usuarioRegistro_id, foto, id) values(66,222, '', 98753);
+insert into perfil(fk_jogador_id, fk_usuarioRegistro_id, foto, id) values(55,333, '', 74841);
+insert into perfil(fk_jogador_id, fk_usuarioRegistro_id, foto, id) values(677,444, '',5487);
+
+#confi
+insert into confi_notificacao(id, ativarNotificacao, receberNotificacaoDasCompeticao, receberNotificacaoDasEquipesVencedoras, ReceberNotificacaoDePremios)
+
+CREATE TABLE Suporte (
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+	FK_usuarioRegistro_id int,         
+    duvida TEXT,  
+    status_atendimento VARCHAR(50),
+    foreign key(fk_usuarioRegistro_id) references usuarioRegistro (id)
+);
 #tabela jogador
-INSERT INTO jogador(nome, categoria, nivel, id, cidade) VALUES('EMILLY', 'INICIANTE', 3, '66N', 'maceió');
-INSERT INTO jogador(nome, categoria, nivel, id, cidade) VALUES('CLAUDIO', 'SUPREMO', 100, '06M', 'rio largo');
-INSERT INTO jogador(nome, categoria, nivel, id, cidade) VALUES('DAVID', 'AVANÇADO', 60, '677', 'arapiraca');
-INSERT INTO jogador(nome, categoria, nivel, id, cidade) VALUES('Adriely', 'intermediário', 50, '678', 'arapiraca');
+INSERT INTO jogador(nome, categoria, nivel, id, cidade) VALUES('EMILLY', 3, 3, 66, 'maceió');
+INSERT INTO jogador(nome, categoria, nivel, id, cidade) VALUES('CLAUDIO', 1, 75, 55, 'rio largo');
+INSERT INTO jogador(nome, categoria, nivel, id, cidade) VALUES('DAVID', 5, 60, 677, 'arapiraca');
+INSERT INTO jogador(nome, categoria, nivel, id, cidade) VALUES('Adriely', 4, 50, 500, 'arapiraca');
 
 #tabela PremioJogoEquipeCompeticao
-INSERT INTO PremioJogoEquipeCompeticao (FK_PREMIO_CODIGO, FK_JOGO_CODIGO, FK_EQUIPE_IDDAEQUIPE, FK_COMPETICAO_CODIGO)VALUES ('444B', 2222, '5555', '505');
-INSERT INTO PremioJogoEquipeCompeticao (FK_PREMIO_CODIGO, FK_JOGO_CODIGO, FK_EQUIPE_IDDAEQUIPE, FK_COMPETICAO_CODIGO)VALUES ('494B', 2262, '5556', '565');
-INSERT INTO PremioJogoEquipeCompeticao (FK_PREMIO_CODIGO, FK_JOGO_CODIGO, FK_EQUIPE_IDDAEQUIPE, FK_COMPETICAO_CODIGO)VALUES ('444AB', 2252, '5522', '557');
+INSERT INTO PremioJogoEquipeCompeticao (FK_PREMIO_CODIGO, FK_JOGO_CODIGO, FK_EQUIPE_IDDAEQUIPE, FK_COMPETICAO_CODIGO)VALUES (254, 254, 555, 650);
+INSERT INTO PremioJogoEquipeCompeticao (FK_PREMIO_CODIGO, FK_JOGO_CODIGO, FK_EQUIPE_IDDAEQUIPE, FK_COMPETICAO_CODIGO)VALUES (694, 002, 999, 697);
+INSERT INTO PremioJogoEquipeCompeticao (FK_PREMIO_CODIGO, FK_JOGO_CODIGO, FK_EQUIPE_IDDAEQUIPE, FK_COMPETICAO_CODIGO)VALUES (024, 236, 222, 698);
 
-INSERT INTO competicaoEquipeJogo(TAXADEINSCRICAO, FK_JOGO_CODIGO, FK_EQUIPE_IDDAEQUIPE, FK_COMPETICAO_CODIGO)VALUES(50, 2222, '5555', '505');
-INSERT INTO competicaoEquipeJogo(TAXADEINSCRICAO, FK_JOGO_CODIGO, FK_EQUIPE_IDDAEQUIPE, FK_COMPETICAO_CODIGO)VALUES(45, 2262, '5556', '565');
-INSERT INTO competicaoEquipeJogo(TAXADEINSCRICAO, FK_JOGO_CODIGO, FK_EQUIPE_IDDAEQUIPE, FK_COMPETICAO_CODIGO)VALUES(35, 2252, '5522', '557');
+#competicaoEquipeJogos
+
+INSERT INTO competicaoEquipeJogo(FK_JOGO_CODIGO, FK_EQUIPE_IDDAEQUIPE, FK_COMPETICAO_CODIGO)VALUES(254, '555', '650');
+INSERT INTO competicaoEquipeJogo(FK_JOGO_CODIGO, FK_EQUIPE_IDDAEQUIPE, FK_COMPETICAO_CODIGO)VALUES(002, '999', '697');
+INSERT INTO competicaoEquipeJogo(FK_JOGO_CODIGO, FK_EQUIPE_IDDAEQUIPE, FK_COMPETICAO_CODIGO)VALUES(236, '222', '698');
