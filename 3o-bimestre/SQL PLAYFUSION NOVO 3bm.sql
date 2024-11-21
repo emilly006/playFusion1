@@ -231,6 +231,7 @@ insert into perfil(fk_jogador_id, fk_usuarioRegistro_id, foto, id) values(66,222
 insert into perfil(fk_jogador_id, fk_usuarioRegistro_id, foto, id) values(55,333, '', 74841);
 insert into perfil(fk_jogador_id, fk_usuarioRegistro_id, foto, id) values(677,444, '',5487);
 
+<<<<<<< HEAD
 #confinotificacao
 INSERT INTO confi_notificacao (ativarNotificacao,receberNotificacaoDasCompeticao,receberNotificacaoDasEquipesVencedoras,receberNotificacaoDePremios) 
 VALUES (TRUE,FALSE, TRUE,FALSE);
@@ -241,6 +242,18 @@ insert into suporte(id, fk_usuarioRegistro_id, duvida, status_atendimento) value
 insert into suporte(id, fk_usuarioRegistro_id, duvida, status_atendimento) values(898,444, 'não consigo fazer(...)','em analise');
 
 
+=======
+#confi
+insert into confi_notificacao(id, ativarNotificacao, receberNotificacaoDasCompeticao, receberNotificacaoDasEquipesVencedoras, ReceberNotificacaoDePremios)
+
+CREATE TABLE Suporte (
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+	FK_usuarioRegistro_id int,         
+    duvida TEXT,  
+    status_atendimento VARCHAR(50),
+    foreign key(fk_usuarioRegistro_id) references usuarioRegistro (id)
+);
+>>>>>>> 4147b8f87433c1a3971a124eff264f21f005c665
 #tabela jogador
 INSERT INTO jogador(nome, categoria, nivel, id, cidade) VALUES('EMILLY', 3, 3, 66, 'maceió');
 INSERT INTO jogador(nome, categoria, nivel, id, cidade) VALUES('CLAUDIO', 1, 75, 55, 'rio largo');
