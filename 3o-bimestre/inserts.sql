@@ -10,9 +10,9 @@ INSERT INTO equipe(idDaEquipe, nome) VALUES(999, 'equipe2');
 INSERT INTO equipe(idDaEquipe, nome) VALUES(222, 'equipe3');
 
 #tabela jogo
-INSERT INTO jogo(nome, codigo, categoria, jogosDisponiveis, foto, descricao) VALUES('FREE FIRE', 254, '1', 'FF', '', 'Já disponivel');
-INSERT INTO jogo(nome, codigo, categoria, jogosDisponiveis, foto, descricao) VALUES('LEAGUE OF LEGENDS', 002, '2', '',' VV', 'ja disponivel');
-INSERT INTO jogo(nome, codigo, categoria, jogosDisponiveis, foto, descricao) VALUES('VALORANT', 236, '3', ' LOL', '', 'ja disponivel');
+INSERT INTO jogo(nome, codigo, categoria, jogosDisponiveis, foto, descricao) VALUES('FREE FIRE', 254, '1', 'FF', 'foto aqui', 'Já disponivel');
+INSERT INTO jogo(nome, codigo, categoria, jogosDisponiveis, foto, descricao) VALUES('LEAGUE OF LEGENDS', 002, '2', 'VV','foto aqui', 'ja disponivel');
+INSERT INTO jogo(nome, codigo, categoria, jogosDisponiveis, foto, descricao) VALUES('VALORANT', 236, '3', ' LOL', 'foto aqui', 'ja disponivel');
 
 #tabela live_streams
 INSERT INTO live_streams (id, fk_usuarioRegistro_id, fk_jogo_codigo, foto, nome, descrição)VALUES (589, 222, 254, '', 'Ao vivo free fire', '250mil participantes');
@@ -20,9 +20,9 @@ INSERT INTO live_streams (id, fk_usuarioRegistro_id, fk_jogo_codigo, foto, nome,
 INSERT INTO live_streams (id, fk_usuarioRegistro_id, fk_jogo_codigo, foto, nome, descrição)VALUES (445, 444, 236, '', 'Ao vivo valorante', '100mil participantes');
 
 #chat live 
-INSERT INTO chat_live (fk_live_stream_id, fk_usuarioRegistro_id, mensagem, foto) VALUES (589, 222, 'será que a pain ganha hoje?', ''); 
-INSERT INTO chat_live (fk_live_stream_id, fk_usuarioRegistro_id, mensagem, foto) VALUES (698, 333, 'Go pain!!!','');  
-INSERT INTO chat_live (fk_live_stream_id, fk_usuarioRegistro_id, mensagem, foto) VALUES (445, 444, 'VRK ganha suave', ''); 
+INSERT INTO chat_live (fk_live_stream_id, fk_usuarioRegistro_id, mensagem, foto, horario) VALUES (589, 222, 'será que a pain ganha hoje?', '', '2024-11-21 22:27:56'); 
+INSERT INTO chat_live (fk_live_stream_id, fk_usuarioRegistro_id, mensagem, foto, horario) VALUES (698, 333, 'Go pain!!!','', '2024-11-21 22:29:56');  
+INSERT INTO chat_live (fk_live_stream_id, fk_usuarioRegistro_id, mensagem, foto, horario) VALUES (445, 444, 'VRK ganha suave', '', '2024-11-21 22:25:56'); 
 
 #chat
 insert into chat(fk_usuarioRegistro_id, ultima_mensagem, quantidadedemensagens, foto, horario)values (222,'Não sei, será que a pain ganha hoje?', 1 ,'', '2024-11-21 07:10:40') ;
