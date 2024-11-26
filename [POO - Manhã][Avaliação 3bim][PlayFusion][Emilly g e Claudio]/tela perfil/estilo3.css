@@ -1,0 +1,116 @@
+body{
+    font-family: Arial, sans-serif;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 280px; 
+    height: 150vh;
+    margin-left: 600px;
+}
+.tela{
+    display: flex;
+    flex-direction: column;
+    justify-content: center ;
+    border: solid 10px bla;
+    background-color: black;
+       width: 280px; 
+    height: 150vh;
+    
+}
+.topo{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #9C1E94 ;
+    color: #7c7c7c;
+    border-radius: 8px;
+    height: 123px;
+}
+.img{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+.perfil{
+    background-color: black;
+    color: #7c7c7c;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    padding-left: 30px;
+    height: 180xp;
+}
+
+.fotoperfil{
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border: solid 3px white;
+    border-radius:30px ;
+
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-around;
+    align-items: center;
+    background-color: black;
+    padding: 25px;
+    gap: 10px;
+}
+.cat{
+    color:#7d1876 ;
+}
+.cinza{
+    color: #7c7c7c;
+}
+
+.botoes{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: black;
+    padding: 20px;
+    border: solid 2px white;
+
+}
+.botao{
+    border: solid 1px white;
+    border-radius: 5px;
+    gap: 5px;
+    padding: 5px;
+}
+.publicacao{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center start;
+    background-color: black;
+    padding: 50px;
+    gap: 20px;
+    height: 500px;
+}
+.postagem1{
+    background-color: #7d1876;
+    display: flex;
+    justify-content: center;
+    border:solid 15px #ffffff;
+    border-radius: 5px;
+    width: 130px;
+    height: 124px;
+ 
+}
+.postagem2{
+    background-color: #7d1876;
+    display: flex;
+    justify-content: center;
+    border:solid 15px #ffffff;
+    border-radius: 5px;
+    width: 130px;
+    height: 124px;
+ 
+}
