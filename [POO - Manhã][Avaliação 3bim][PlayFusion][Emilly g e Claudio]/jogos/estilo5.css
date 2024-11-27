@@ -1,0 +1,106 @@
+.body {
+    margin-left: 20px;
+}
+
+.tela {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #9C1E94;
+    width: 430px;
+    border-radius: 15px;
+}
+
+.topo {
+    display: flex;
+}
+
+.voltar {
+    width: 25px;
+    height: 25px;
+    margin: 10px;
+}
+
+.texto {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+    color: white;
+    font-size: 20px;
+}
+
+.texto1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px;
+    gap: 30px;
+}
+
+.jogo1 {
+    background-color: #3d3d3d;
+    display: flex;
+    flex-direction: row;
+    width: 260px;
+    height: 180px;
+    width: 370px;
+    height: 180px;
+}
+
+.fotoG {
+    display: flex;
+    flex-direction: row;
+    width: 260px;
+    height: 180px;
+
+}
+
+.mini {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-size: 16px;
+    gap: 5px;
+    padding: 2px;
+}
+
+.minifoto {
+    width: 102px;
+    height: 57px;
+}
+
+.desc {
+    display: flex;
+    font-size: 20px;
+    color: white;
+
+}
+
+.jogo2 {
+    background-color: #3d3d3d;
+    display: flex;
+    flex-direction: row;
+    width: 260px;
+    height: 180px;
+    width: 370px;
+    height: 180px;
+}
+
+.jogo3 {
+    background-color: #3d3d3d;
+    display: flex;
+    flex-direction: row;
+    width: 260px;
+    height: 180px;
+    width: 370px;
+    height: 180px;
+}
